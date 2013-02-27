@@ -1,0 +1,147 @@
+2012-12-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.2: Release tar ball made.
+
+2012-12-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Remove an incorrect comment.
+	* awkcard.in: Bump patch level.
+
+2012-12-15         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* macros: Update to GPL Version 3 and add copyright year.
+	* texinfo.tex: Updated, from automake 1.12.6.
+
+2012-12-09         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* awkforai.txt: Changed content to be pointers to the article
+	to avoid copyright issues.
+	* gawk.texi: Updated description of awkforai.txt.
+
+2012-12-07         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (I/O Functions): Document that fflush() is now part
+	of POSIX. Fix in a few other places as well.
+	* awkcard.in: Update for fflush().
+
+2012-11-27         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (I/O Functions): Document new behavior for fflush().
+	* gawk.1: Update for fflush().
+
+2012-10-13         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* Makefile.am: Add dgawk.1 to man page links created / removed
+	on install / uninstall.
+
+2012-10-02         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Glossary). Correct the full name for `ISO' per
+	bug report from William Bresler <wbresler@acm.org>. Add a link
+	to the ISO website.
+
+2012-09-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Nextfile Statement): Document that it's now part of POSIX
+	and update the title.
+	(Delete): Document that `delete array' is now part of POSIX.
+	* awkcard.in: Adjust coloring for nextfile and delete array.
+
+2012-08-12         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Ranges and Locales): Clarified ranges and
+	locales. Again.
+
+2012-08-05         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (PC Binary Installation): Document Eli Zaretskii's
+	site.
+	(Records): Update case of RS = "a". It only prints 1 if in
+	POSIX mode. Thanks to Jeroen Schot who first reported it.
+
+2012-07-20         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Ranges and Locales): Clarified ranges and
+	locales.
+
+2012-07-13         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Getline Notes): Discuss side effects in
+	argument expression.
+
+2012-06-29         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi, awkcard.in: Latest mawk understands /dev/stdin.
+
+2012-04-27         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Add that -b affects output.
+
+2012-04-27         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* texinfo.tex: Update to latest from automake 1.12.
+
+2012-04-09         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* texinfo.tex: Update to latest from automake 1.11.4.
+
+2012-03-28         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.1: Release tar ball made.
+
+2012-02-10         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi, awkcard.in: Bump patch level.
+	* texinfo.tex: Updated from Texinfo CVS.
+
+2011-12-06         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Various typo fixes from mailing list.
+
+2011-11-10         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.1: Fix some .BR to be .B.
+
+2011-11-08         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Further improvement in the discussion of sorted array
+	traversal. Some sections reordered and text edited to suit.
+
+2011-11-06         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Try to improve discussion of sorted array
+	traversal.
+
+2011-09-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.1: Fix some spelling errors. Thanks to
+	Jeroen Schot <schot@A-Eskwadraat.nl>.
+	* gawk.texi: Some minor fixes.
+
+2011-07-28         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi (Gory Details): Restore text on historical behavior
+	etc. and add explanation on gawk 4.0.x.
+
+2011-07-17         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawk.texi: Add reference in node Expressions to node Precedence,
+	based on suggestion from Dan Jacobson dated 4 Jun 2001.
+
+2011-07-17  Paul Eggert  <eggert@twinsun.com>
+
+	* gawk.texi: Warn up-front (indirectly) that plain gawk is not
+	compatible with SVR4 awk and with POSIX awk.  Describe how
+	gawk differs from the GNU standard in its interpretation of
+	POSIXLY_CORRECT.  (From mail dated 15 May 2001).
+
+2011-06-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* Makefile.am (EXTRA_DIST): Add ChangeLog.0.
+	* 4.0.0: Remake the tar ball.
+
+2011-06-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* ChangeLog.0: Rotated ChangeLog into this file.
+	* ChangeLog: Created anew for gawk 4.0.0 and on.
+	* 4.0.0: Release tar ball made.

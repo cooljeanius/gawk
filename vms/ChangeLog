@@ -1,0 +1,85 @@
+2012-12-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.2: Release tar ball made.
+
+2012-12-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmstest.com (paramuninitglobal): New test.
+
+2012-12-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmsbuild.com (REL, PATCHLVL): Move to 4.0.2.
+	* descrip.mms (REL, PATCHLVL): Move to 4.0.2.
+	* vms-conf.h (VERSION, PACKAGE_VERSION, PACKAGE_STRING): Move to 4.0.2.
+
+2012-11-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmstest.com: Fix typo in applying previous patch.
+
+2012-11-22         Anders Wallin         <anders_s_wallin@yahoo.se>
+
+	* vmstest.com: Updated to match main test/Makefile.
+
+2012-03-29         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* config.h: Add definition for _Noreturn.
+
+2012-03-28         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.1: Release tar ball made.
+
+2012-03-28         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vms-conf.h: Update copyright year.
+
+2012-03-21         Anders Wallin         <anders_s_wallin@yahoo.se>
+
+	* vmstest.com: Make printfbad3 test work.
+
+2012-03-20         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmstest.com: Add printfbad3 test.
+
+2012-02-10         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmsbuild.com, descrip.mms, vms-conf.h: Update patch level.
+
+2011-12-31         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vms_misc.c: [STREQ, STREQN]: Change use of macros to call
+	strcmp, strncmp, directly.
+
+2011-11-02	Pat Rankin	<r.pat.rankin@gmail.com>
+
+	* vms-conf.h (HAVE_SETSID, HAVE_SYS_IOCTL): Add but leave undef'd.
+	(HAVE_ISWCTYPE, HAVE_ISWLOWER, HAVE_ISWUPPER, HAVE_MBRLEN,
+	HAVE_MBRTOWC, HAVE_TOWLOWER, HAVE_TOWUPPER, HAVE_WCHAR_H,
+	HAVE_WCRTOMB, HAVE_WCSCOLL, HAVE_WCTYPE, HAVE_WCTYPE_H,
+	HAVE_WCTYPE_T): Define as 1 since DEC C supports all these.
+
+	* descrip.mms (replace.obj): Add dependencies for missing_d/*.c.
+	* vmstest.com (unix_tests): Fix typo in spelling of rtlen01.
+
+2011-10-30	Pat Rankin	<r.pat.rankin@gmail.com>
+
+	* vmstest.com (fpat3, fwtest3, getline5, gsubtst7, gsubtst8,
+	pty1, rtlen, rtlen01, rtlenmb): New tests.
+	(posix2008sub): Revised test.
+
+2011-10-25         Anders Wallin        <anders_s_wallin@yahoo.se>
+
+	* vmstest.com (posix2008sub): Added as specific test in order to
+	use --posix option.
+
+2011-06-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* vmsbuild.com (REL, PATCHLVL): Move to 4.0.0.
+	* descrip.mms (REL, PATCHLVL): Move to 4.0.0.
+	* vms-conf.h (VERSION, PACKAGE_VERSION): Move to 4.0.0.
+	* 4.0.0: Remake the tar ball.
+
+2011-06-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* ChangeLog.0: Rotated ChangeLog into this file.
+	* ChangeLog: Created anew for gawk 4.0.0 and on.
+	* 4.0.0: Release tar ball made.

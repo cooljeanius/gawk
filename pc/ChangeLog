@@ -1,0 +1,138 @@
+2012-12-24         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.2: Release tar ball made.
+
+2012-12-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* Makefile.tst (paramuninitglobal): New test.
+
+2012-11-22         Eli Zaretskii  <eliz@gnu.org>
+
+	* Makefile.tst (jarebug): Update.
+	(GREP_OPTIONS): Add.
+
+2012-11-04   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst (jarebug, charasbytes): Update.
+
+2012-10-28   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst: Sync with mainline version.
+
+2012-05-06         Eli Zaretskii  <eliz@gnu.org>
+
+	* config.sed: Update DJGPP -> __DJGPP__.
+
+2012-03-29         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* config.h: Add definition for _Noreturn.
+
+2012-03-28         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* 4.0.1: Release tar ball made.
+
+2012-03-20         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* Makefile.tst (printfbad3): New test.
+
+2012-03-14         Eli Zaretskii  <eliz@gnu.org>
+
+	* gawkmisc.pc (btowc): New version for DJGPP.
+
+2012-03-01   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst: Sync with mainline version.
+
+2012-03-01         Eli Zaretskii  <eliz@gnu.org>
+
+	* Makefile: Quiet confusing info messages from the linker when
+	gawk is linked against readline as a shared library.
+
+2012-02-22         Eli Zaretskii  <eliz@gnu.org>
+
+	* Makefile.tst: Update CMP and CP definitions, add "Expect xxxx to
+	fail with MinGW" messages as needed.
+
+2012-02-15         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawkmisc.pc (execvp): Modify signature, return -1
+	on error.
+
+2012-02-11  Eli Zaretskii  <eliz@gnu.org>
+
+	Fix dependencies in pc/Makefile.
+	* Makefile ($(ALLOBJS) $(LIBOBJS) eval_p$O profile_p$O): Add eval_d$O,
+	debug$O, and command$O.
+
+	Support MinGW build with the readline library.
+	* Makefile (default): Add a line for the mingw32-readline target.
+	(mingw32-readline): New target, passes -DHAVE_LIBREADLINE to the
+	compiler and adds -lreadline to the linker command line.
+
+	* config.sed: Comment out "#undef HAVE_LIBREADLINE", so that it
+	could be #define'd on the compiler command line.
+
+2012-02-10         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* gawkmisc.pc (execvp): New function based on code from Eli
+	Zaretskii to make dgawk's restarting the debugger work.
+
+2012-01-27   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst: Sync with mainline version.
+
+2011-12-06   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst: Sync with mainline version.
+	Use testoutcmp.awk script.
+
+2011-12-06         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* testoutcmp.awk: Script to replace cmd for DJGPP.
+
+2011-11-01   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* config.sed: Additional update.
+
+2011-10-29  Eli Zaretskii  <eliz@gnu.org>
+
+	* config.sed: Fix some edits, to be consistent with the old
+	config.h file.  Make regexps match #undef lines with whitespace
+	at the end of the line.  Add forgotten EMX #defines.
+
+2011-10-27   Scott Deifik  <scottd.mail@sbcglobal.net>
+
+	* Makefile.tst: Sync with mainline version.
+
+2011-10-24   Eli Zaretskii  <eliz@gnu.org>
+
+	* gawkmisc.pc (wctob) [__MINGW32__]: A replacement for the
+	function of the same name in MS runtime, which does a better job
+	with 8-bit characters that have their high bit set.
+	Original supplied by Jim Meyering  <jim@meyering.net>.
+
+	* popen.h (system) [__MINGW32__]: Redirect to os_system.
+
+	* Makefile (./doc/awkcard.tr): Don't use Unixy forward slashes in
+	redirection.
+	(builtin$O): Depend on popen.h.
+	(random$O): New target, separated from builtin$O.
+
+	* configpk.sed:
+	* config.sed:
+	* make-config.bat: New files, to produce pc/config.h from the top-level
+	configh.in file.
+
+2011-10-18  Juan Manuel Guerrero  <juan.guerrero@gmx.de>
+
+	* Makefile: doc target to create all documentation files.
+
+2011-09-30  Eli Zaretskii  <eliz@gnu.org>
+
+	* config.h: Update packaging related versions.
+
+2011-06-23         Arnold D. Robbins     <arnold@skeeve.com>
+
+	* ChangeLog.0: Rotated ChangeLog into this file.
+	* ChangeLog: Created anew for gawk 4.0.0 and on.
+	* 4.0.0: Release tar ball made.

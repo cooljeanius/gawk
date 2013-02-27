@@ -1,0 +1,10 @@
+*libs/*
+*.exe
+passwd.awk
+group.awk
+igawk
+eg.old
+pwcat
+grcat
+*.o
+*.lo

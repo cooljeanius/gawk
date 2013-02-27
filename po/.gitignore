@@ -1,0 +1,6 @@
+*.insert-header
+remove-potcdate.sed
+gawk.*po
+*.new.po
+stamp-*
+*.o
