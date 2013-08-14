@@ -53,9 +53,12 @@ confdefs.h
 Makefile
 awklib/Makefile
 po/Makefile
+po/Makefile.in
+po/POTFILES
 test/Makefile
 config.h
 libtool
 *gawk.sum
 *site.exp
+*site.bak
 cscope.files
