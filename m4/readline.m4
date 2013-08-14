@@ -13,7 +13,7 @@ dnl found, and sets @LIBREADLINE@ to the necessary libraries.
 AC_DEFUN([GNUPG_CHECK_READLINE],
 [
   AC_ARG_WITH([readline],
-     AC_HELP_STRING([--with-readline=DIR],
+     AS_HELP_STRING([--with-readline=DIR],
 	[look for the readline library in DIR]),
      [_do_readline=$withval],[_do_readline=yes])
 
@@ -28,30 +28,30 @@ AC_DEFUN([GNUPG_CHECK_READLINE],
         _combo="-lreadline${_termcap:+ $_termcap}"
         LIBS="$LIBS $_combo"
 
-        AC_MSG_CHECKING([whether readline via \"$_combo\" is present and sane])
+        AC_MSG_CHECKING([whether readline via "$_combo" is present and sane])
 
         AC_LINK_IFELSE([
-	AC_LANG_PROGRAM([
+	AC_LANG_PROGRAM([[
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-],[
+]],[[
 rl_completion_func_t *completer;
 add_history("foobar");
 rl_catch_signals=0;
 rl_inhibit_completion=0;
 rl_attempted_completion_function=NULL;
 rl_completion_matches(NULL,NULL);
-])],_found_readline=yes,_found_readline=no)
+]])],[_found_readline=yes],[_found_readline=no])
 
         AC_MSG_RESULT([$_found_readline])
 
         LIBS=$_readline_save_libs
 
         if test $_found_readline = yes ; then
-           AC_DEFINE(HAVE_LIBREADLINE,1,
+           AC_DEFINE([HAVE_LIBREADLINE],[1],
 	      [Define to 1 if you have a fully functional readline library.])
-           AC_SUBST(LIBREADLINE,$_combo)
+           AC_SUBST([LIBREADLINE],[$_combo])
            break
         fi
      done

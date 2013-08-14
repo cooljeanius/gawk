@@ -63,7 +63,7 @@ EXTRA_DIST = \
 	vms \
 	ylwrap
 
-# It's OK for the generated file `version.c' not to be removed by
+# It is OK for the generated file `version.c' not to be removed by
 # "make distclean".
 distcleancheck_listfiles = \
   find . -type f -print | grep -v '^\./version\.c$$'

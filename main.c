@@ -1,23 +1,23 @@
 /*
- * main.c -- Code generator and main program for gawk. 
+ * main.c -- Code generator and main program for gawk.
  */
 
-/* 
+/*
  * Copyright (C) 1986, 1988, 1989, 1991-2012 the Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GAWK, the GNU implementation of the
  * AWK Programming Language.
- * 
+ *
  * GAWK is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * GAWK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
@@ -28,6 +28,14 @@
 
 #include "awk.h"
 #include "getopt.h"
+
+#if defined(HAVE_CONFIG_H)
+#include "config.h"
+#endif
+
+#if defined(HAVE_LOCALE_H)
+#include <locale.h>
+#endif
 
 #ifdef HAVE_MCHECK_H
 #include <mcheck.h>
@@ -309,7 +317,7 @@ main(int argc, char **argv)
 	/* we do error messages ourselves on invalid options */
 	opterr = FALSE;
 
-	/* copy argv before getopt gets to it; used to restart the debugger */  
+	/* copy argv before getopt gets to it; used to restart the debugger */
 	save_argv(argc, argv);
 
 	/* initialize global (main) execution context */
@@ -449,7 +457,7 @@ main(int argc, char **argv)
 		case 'r':
 			do_intervals = TRUE;
  			break;
- 
+
 		case 'S':
 			do_sandbox = TRUE;
   			break;
@@ -649,7 +657,7 @@ out:
 	/* Read in the program */
 	if (parse_program(&code_block) != 0)
 		exit(EXIT_FAILURE);
-	
+
 	if (do_intl)
 		exit(EXIT_SUCCESS);
 
@@ -693,7 +701,7 @@ out:
 
 	if (do_tidy_mem)
 		release_all_vars();
-	
+
 	/* keep valgrind happier */
 	if (extra_stack)
 		efree(extra_stack);
@@ -823,7 +831,7 @@ GNU General Public License for more details.\n\
 	static const char blurb_part3[] =
 	  N_("You should have received a copy of the GNU General Public License\n\
 along with this program. If not, see http://www.gnu.org/licenses/.\n");
- 
+
 	/* multiple blurbs are needed for some brain dead compilers. */
 	printf(_(blurb_part1), UPDATE_YEAR);	/* Last update year */
 	fputs(_(blurb_part2), stdout);
@@ -985,7 +993,7 @@ load_environ()
 	int i;
 	NODE *tmp;
 
-	ENVIRON_node = install_symbol(estrdup("ENVIRON", 7), 
+	ENVIRON_node = install_symbol(estrdup("ENVIRON", 7),
 				mk_symbol(Node_var_array, (NODE *) NULL));
 
 	for (i = 0; environ[i] != NULL; i++) {
@@ -1209,7 +1217,7 @@ arg_assign(char *arg, int initing)
 		if (! initing) {
 			var = lookup(arg);
 			if (var != NULL && var->type == Node_func)
-				fatal(_("cannot use function `%s' as variable name"), arg); 
+				fatal(_("cannot use function `%s' as variable name"), arg);
 		}
 
 		/*
@@ -1403,7 +1411,7 @@ estrdup(const char *str, size_t len)
 	s[len] = '\0';
 	return s;
 }
-             
+
 #if defined(HAVE_LOCALE_H)
 
 /* init_locale --- initialize locale info. */

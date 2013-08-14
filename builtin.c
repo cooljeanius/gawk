@@ -2,22 +2,22 @@
  * builtin.c - Builtin functions and various utility procedures.
  */
 
-/* 
+/*
  * Copyright (C) 1986, 1988, 1989, 1991-2012 the Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GAWK, the GNU implementation of the
  * AWK Programming Language.
- * 
+ *
  * GAWK is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * GAWK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
@@ -25,10 +25,23 @@
 
 
 #include "awk.h"
+
+#if defined(HAVE_CONFIG_H)
+#include "config.h"
+#endif
+
+#if defined(HAVE_LOCALE_H)
+#include <locale.h>
+#endif
+
 #if defined(HAVE_FCNTL_H)
 #include <fcntl.h>
 #endif
+
+#if defined(HAVE_MATH_H)
 #include <math.h>
+#endif
+
 #include "random.h"
 #include "floatmagic.h"
 
@@ -176,9 +189,9 @@ do_fflush(int nargs)
 
 	/*
 	 * November, 2012.
-	 * It turns out that circa 2002, when BWK 
+	 * It turns out that circa 2002, when BWK
 	 * added fflush() and fflush("") to his awk, he made both of
-	 * them flush everything.  
+	 * them flush everything.
 	 *
 	 * Now, with our inside agent getting ready to try to get fflush()
 	 * standardized in POSIX, we are going to make our awk consistent
@@ -376,7 +389,7 @@ do_index(int nargs)
 		 * If we don't have valid wide character strings, use
 		 * the real bytes.
 		 */
-		do_single_byte = ((s1->wstlen == 0 && s1->stlen > 0) 
+		do_single_byte = ((s1->wstlen == 0 && s1->stlen > 0)
 					|| (s2->wstlen == 0 && s2->stlen > 0));
 	}
 #endif
@@ -893,7 +906,7 @@ check_pos:
 		case ' ':		/* print ' ' or '-' */
 					/* 'space' flag is ignored */
 					/* if '+' already present  */
-			if (signchar != FALSE) 
+			if (signchar != FALSE)
 				goto check_pos;
 			/* FALL THROUGH */
 		case '+':		/* print '+' or '-' */
@@ -919,20 +932,20 @@ check_pos:
 			alt = TRUE;
 			goto check_pos;
 		case '\'':
-#if defined(HAVE_LOCALE_H)       
+#if defined(HAVE_LOCALE_H)
 			/* allow quote_flag if there is a thousands separator. */
 			if (loc.thousands_sep[0] != '\0')
 				quote_flag = TRUE;
 			goto check_pos;
 #else
-			goto retry;  
+			goto retry;
 #endif
 		case 'l':
 			if (big_flag)
 				break;
 			else {
 				static short warned = FALSE;
-				
+
 				if (do_lint && ! warned) {
 					lintwarn(_("`l' is meaningless in awk formats; ignored"));
 					warned = TRUE;
@@ -949,7 +962,7 @@ check_pos:
 				break;
 			else {
 				static short warned = FALSE;
-				
+
 				if (do_lint && ! warned) {
 					lintwarn(_("`L' is meaningless in awk formats; ignored"));
 					warned = TRUE;
@@ -966,7 +979,7 @@ check_pos:
 				break;
 			else {
 				static short warned = FALSE;
-				
+
 				if (do_lint && ! warned) {
 					lintwarn(_("`h' is meaningless in awk formats; ignored"));
 					warned = TRUE;
@@ -1128,7 +1141,7 @@ out2:
 						jj = 0;		/* keep using current val in loc.grouping[ii] */
 					else if (loc.grouping[ii+1] == CHAR_MAX)
 						quote_flag = FALSE;
-					else {                 
+					else {
 						ii++;
 						jj = 0;
 					}
@@ -1226,11 +1239,11 @@ out2:
 				if (base == 10 && quote_flag && loc.grouping[ii] && ++jj == loc.grouping[ii]) {
 					if (uval)	/* only add if more digits coming */
 						PREPEND(loc.thousands_sep[0]);	/* XXX --- assumption it's one char */
-					if (loc.grouping[ii+1] == 0)                                          
+					if (loc.grouping[ii+1] == 0)
 						jj = 0;     /* keep using current val in loc.grouping[ii] */
-					else if (loc.grouping[ii+1] == CHAR_MAX)                        
+					else if (loc.grouping[ii+1] == CHAR_MAX)
 						quote_flag = FALSE;
-					else {                 
+					else {
 						ii++;
 						jj = 0;
 					}
@@ -1692,7 +1705,7 @@ do_strftime(int nargs)
 				do_gmt = (t3->stlen > 0);
 			DEREF(t3);
 		}
-			
+
 		if (nargs >= 2) {
 			t2 = POP_SCALAR();
 			if (do_lint && (t2->flags & (NUMCUR|NUMBER)) == 0)
@@ -1860,7 +1873,7 @@ extern NODE **fmt_list;  /* declared in eval.c */
 
 /* do_print --- print items, separated by OFS, terminated with ORS */
 
-void 
+void
 do_print(int nargs, int redirtype)
 {
 	struct redirect *rp = NULL;
@@ -1928,7 +1941,7 @@ do_print(int nargs, int redirtype)
 
 /* do_print_rec --- special case printing of $0, for speed */
 
-void 
+void
 do_print_rec(int nargs, int redirtype)
 {
 	FILE *fp = NULL;
@@ -2241,7 +2254,7 @@ do_match(int nargs)
 	tre = POP();
 	rp = re_update(tre);
 	t1 = POP_STRING();
-	
+
 	rstart = research(rp, t1->stptr, 0, t1->stlen, RE_NEED_START);
 	if (rstart >= 0) {	/* match succeded */
 		size_t *wc_indices = NULL;
@@ -2255,7 +2268,7 @@ do_match(int nargs)
 		}
 #endif
 		rstart++;	/* now it's 1-based indexing */
-	
+
 		/* Build the array only if the caller wants the optional subpatterns */
 		if (dest != NULL) {
 			subsepstr = SUBSEP_node->var_value->stptr;
@@ -2271,7 +2284,7 @@ do_match(int nargs)
 					size_t subpat_len;
 					NODE **lhs;
 					NODE *sub;
-					
+
 					start = t1->stptr + s;
 					subpat_start = s;
 					subpat_len = len = SUBPATEND(rp, t1->stptr, ii) - s;
@@ -2281,7 +2294,7 @@ do_match(int nargs)
 						subpat_len = wc_indices[s + len - 1] - subpat_start + 1;
 					}
 #endif
-	
+
 					it = make_string(start, len);
 					it->flags |= MAYBE_NUM;	/* user input */
 
@@ -2294,7 +2307,7 @@ do_match(int nargs)
 					sprintf(buff, "%d", ii);
 					ilen = strlen(buff);
 					amt = ilen + subseplen + strlen("length") + 2;
-	
+
 					if (oldamt == 0) {
 						emalloc(buf, char *, amt, "do_match");
 					} else if (amt > oldamt) {
@@ -2304,22 +2317,22 @@ do_match(int nargs)
 					memcpy(buf, buff, ilen);
 					memcpy(buf + ilen, subsepstr, subseplen);
 					memcpy(buf + ilen + subseplen, "start", 6);
-	
+
 					slen = ilen + subseplen + 5;
-	
+
 					it = make_number((AWKNUM) subpat_start + 1);
 					sub = make_string(buf, slen);
 					lhs = assoc_lookup(dest, sub, FALSE);
 					unref(*lhs);
 					*lhs = it;
 					unref(sub);
-	
+
 					memcpy(buf, buff, ilen);
 					memcpy(buf + ilen, subsepstr, subseplen);
 					memcpy(buf + ilen + subseplen, "length", 7);
-	
+
 					slen = ilen + subseplen + 6;
-	
+
 					it = make_number((AWKNUM) subpat_len);
 					sub = make_string(buf, slen);
 					lhs = assoc_lookup(dest, sub, FALSE);
@@ -2352,9 +2365,9 @@ do_match(int nargs)
  * Gsub can be tricksy; particularly when handling the case of null strings.
  * The following awk code was useful in debugging problems.  It is too bad
  * that it does not readily translate directly into the C code, below.
- * 
+ *
  * #! /usr/local/bin/mawk -f
- * 
+ *
  * BEGIN {
  * 	TRUE = 1; FALSE = 0
  * 	print "--->", mygsub("abc", "b+", "FOO")
@@ -2364,7 +2377,7 @@ do_match(int nargs)
  * 	print "--->", mygsub("abc", "c+", "X")
  * 	print "--->", mygsub("abc", "x*$", "X")
  * }
- * 
+ *
  * function mygsub(str, regex, replace,	origstr, newstr, eosflag, nonzeroflag)
  * {
  * 	origstr = str;
@@ -2402,7 +2415,7 @@ do_match(int nargs)
  * 	}
  * 	if (length(str) > 0)
  * 		newstr = newstr str	# rest of string
- * 
+ *
  * 	return newstr
  * }
  */
@@ -2414,7 +2427,7 @@ do_match(int nargs)
  *
  * The relevant text is to be found on lines 6394-6407 (pages 166, 167) of the
  * 2001 standard:
- * 
+ *
  * sub(ere, repl[, in ])
  *  Substitute the string repl in place of the first instance of the extended regular
  *  expression ERE in string in and return the number of substitutions. An ampersand
@@ -2467,7 +2480,7 @@ do_sub(int nargs, unsigned int flags)
 	long current;
 	int lastmatchnonzero;
 	char *mb_indices = NULL;
-	
+
 	if ((flags & GENSUB) != 0) {
 		double d;
 		NODE *t1;
@@ -2611,7 +2624,7 @@ set_how_many:
 
 		/*
 		 * create the result, copying in parts of the original
-		 * string 
+		 * string
 		 */
 		len = matchstart - text + repllen
 		      + ampersands * (matchend - matchstart);
@@ -2663,7 +2676,7 @@ set_how_many:
 							int dig = scan[1] - '0';
 							if (dig < NUMSUBPATS(rp, t->stptr) && SUBPATSTART(rp, tp->stptr, dig) != -1) {
 								char *start, *end;
-		
+
 								start = t->stptr
 								      + SUBPATSTART(rp, t->stptr, dig);
 								end = t->stptr
@@ -2745,13 +2758,13 @@ done:
 	DEREF(s);
 
 	if ((matches == 0 || (flags & LITERAL) != 0) && buf != NULL)
-		efree(buf); 
+		efree(buf);
 
 	if (flags & GENSUB) {
 		if (matches > 0) {
 			/* return the result string */
 			DEREF(t);
-			return make_str_node(buf, textlen, ALREADY_MALLOCED);	
+			return make_str_node(buf, textlen, ALREADY_MALLOCED);
 		}
 
 		/* return the original string */
@@ -2763,7 +2776,7 @@ done:
 		DEREF(t);
 	else if (matches > 0) {
 		unref(*lhs);
-		*lhs = make_str_node(buf, textlen, ALREADY_MALLOCED);	
+		*lhs = make_str_node(buf, textlen, ALREADY_MALLOCED);
 	}
 
 	return make_number((AWKNUM) matches);

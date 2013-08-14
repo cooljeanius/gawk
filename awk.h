@@ -1,23 +1,23 @@
 /*
- * awk.h -- Definitions for gawk. 
+ * awk.h -- Definitions for gawk.
  */
 
-/* 
+/*
  * Copyright (C) 1986, 1988, 1989, 1991-2011 the Free Software Foundation, Inc.
- * 
+ *
  * This file is part of GAWK, the GNU implementation of the
  * AWK Programming Language.
- * 
+ *
  * GAWK is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * GAWK is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
@@ -53,9 +53,15 @@
 
 #include <stdio.h>
 #include <assert.h>
+
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #endif /* HAVE_LIMITS_H */
+
+#if defined(HAVE_LOCALE_H)
+#include <locale.h>
+#endif
+
 #include <ctype.h>
 #include <setjmp.h>
 
@@ -522,7 +528,7 @@ typedef enum opcodeval {
 	Op_nomatch,
 
 	Op_rule,
-	
+
 	/* keywords */
 	Op_K_case,
 	Op_K_default,
@@ -584,13 +590,13 @@ typedef enum opcodeval {
 	Op_stop,
 
 	/* parsing (yylex and yyparse), should never appear in valid compiled code */
-	Op_token, 	
+	Op_token,
 	Op_symbol,
 	Op_list,
 
 	/* program structures -- for use in the profiler/pretty printer */
 	Op_K_do,
-	Op_K_for,			
+	Op_K_for,
 	Op_K_arrayfor,
 	Op_K_while,
 	Op_K_switch,
@@ -656,7 +662,7 @@ typedef struct exp_instruction {
 
 /* Op_K_exit */
 #define target_end      d.di
-#define target_atexit   x.xi	
+#define target_atexit   x.xi
 
 /* Op_newfile, Op_K_getline, Op_nextfile */
 #define target_endfile	x.xi
@@ -744,7 +750,7 @@ typedef struct exp_instruction {
 #define field_assign    x.aptr
 
 /* Op_field_assign, Op_var_assign */
-#define assign_ctxt	d.dl	
+#define assign_ctxt	d.dl
 
 /* Op_concat */
 #define concat_flag	    d.dl
@@ -777,7 +783,7 @@ typedef struct exp_instruction {
 
 /* Op_line_range */
 #define condpair_left   d.di
-#define condpair_right  x.xi 
+#define condpair_right  x.xi
 
 typedef struct iobuf {
 	const char *name;       /* filename */
@@ -797,7 +803,7 @@ typedef struct iobuf {
 	void *opaque;		/* private data for open hooks */
 	int (*get_record)(char **out, struct iobuf *, int *errcode);
 	void (*close_func)(struct iobuf *);		/* open and close hooks */
-	
+
 	int errcode;
 
 	int flag;
@@ -805,7 +811,7 @@ typedef struct iobuf {
 #		define	IOP_NOFREE_OBJ	2
 #		define  IOP_AT_EOF      4
 #		define  IOP_CLOSED      8
-#		define  IOP_AT_START    16			
+#		define  IOP_AT_START    16
 } IOBUF;
 
 typedef void (*Func_ptr)(void);
@@ -899,7 +905,7 @@ struct flagtab {
 #ifndef LONG_MIN
 #define LONG_MIN ((long)(-LONG_MAX - 1L))
 #endif
-#define UNLIMITED    LONG_MAX 
+#define UNLIMITED    LONG_MAX
 
 /* -------------------------- External variables -------------------------- */
 /* gawk builtin variables */
@@ -1008,7 +1014,7 @@ extern STACK_ITEM *stack_top;
 #define POP_ADDRESS()			decr_sp()->lptr
 #define PEEK(n)				(stack_ptr - (n))->rptr
 #define TOP()				stack_ptr->rptr		/* same as PEEK(0) */
-#define TOP_ADDRESS()			stack_ptr->lptr 
+#define TOP_ADDRESS()			stack_ptr->lptr
 #define PUSH(r)				(void) (incr_sp()->rptr = (r))
 #define PUSH_ADDRESS(l)			(void) (incr_sp()->lptr = (l))
 #define REPLACE(r)			(void) (stack_ptr->rptr = (r))
@@ -1022,7 +1028,7 @@ extern STACK_ITEM *stack_top;
  * UPREF and DEREF --- simplified versions of dupnode and unref
  * UPREF does not handle FIELD node. Most appropriate use is
  * for elements on the runtime stack. When in doubt, use dupnode.
- */   
+ */
 
 #define DEREF(r)	( _r = (r), (!(_r->flags & PERM) && (--_r->valref == 0)) ?  unref(_r) : (void)0 )
 
