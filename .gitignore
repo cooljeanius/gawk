@@ -49,6 +49,7 @@ seq
 *.dylib
 tmpwrk*/*
 confdefs.h
+conftest.*
 *.status
 Makefile
 awklib/Makefile
