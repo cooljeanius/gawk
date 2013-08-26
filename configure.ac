@@ -28,6 +28,10 @@ dnl# Process this file with autoconf to produce a configure script.
 
 AC_INIT([GNU Awk],[4.0.2],[bug-gawk@gnu.org],[gawk])
 
+AC_PREREQ([2.69])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([m4])
+
 # This is a hack. Different versions of install on different systems
 # are just too different. Chuck it and use install-sh.
 #
@@ -43,15 +47,12 @@ then
 	export INSTALL
 fi
 
-AC_PREREQ([2.69])
 AC_CANONICAL_TARGET
 
 AC_MSG_CHECKING([automake stuff])
 AC_MSG_RESULT([ ])
-AM_INIT_AUTOMAKE([1.12 dejagnu dist-xz foreign -Wall])
+AM_INIT_AUTOMAKE([1.12 dejagnu dist-xz gnu -Wall])
 AM_MAINTAINER_MODE
-
-AC_CONFIG_MACRO_DIR([m4])
 
 dnl# Additional argument stuff
 AC_ARG_WITH([whiny-user-strftime],[AS_HELP_STRING([--with-whiny-user-strftime],[Force use of included version of strftime for deficient systems])],[
@@ -184,7 +185,7 @@ dnl# initialize GNU gettext
 AC_MSG_CHECKING([gettext])
 AC_MSG_RESULT([ ])
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18.2])
+AM_GNU_GETTEXT_VERSION([0.18.3])
 AM_LANGINFO_CODESET
 gt_LC_MESSAGES
 
@@ -209,9 +210,9 @@ AC_HEADER_TIME
 AC_CHECK_HEADERS([argz.h arpa/inet.h assert.h ctype.h errno.h fcntl.h \
         file.h float.h langinfo.h limits.h locale.h libintl.h malloc.h \
         math.h mcheck.h netdb.h netinet/in.h setjmp.h signal.h sigsegv.h \
-        stat.h stdarg.h stdbool.h stddef.h stdio.h stdio_ext.h sys/ioctl.h \
-        sys/param.h sys/socket.h sys/time.h termios.h time.h stropts.h \
-        unixlib.h wchar.h wctype.h])
+        stat.h stdarg.h stdbool.h stddef.h stdio.h stdio_ext.h \
+        sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h \
+        time.h stropts.h unixlib.h wchar.h wctype.h])
 
 if test "$ac_cv_header_string_h" = yes
 then
