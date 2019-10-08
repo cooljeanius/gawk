@@ -63,6 +63,8 @@ EXTRA_DIST = \
 	vms \
 	build-aux/ylwrap
 
+DISTCLEANFILES = *~
+
 # It is OK for the generated file `version.c' not to be removed by
 # "make distclean".
 distcleancheck_listfiles = \
@@ -202,3 +204,9 @@ valgrind:
 	cd test; rm -f log.[0-9]*; \
 	make check AWK="valgrind --leak-check=full --log-file=log.%p ../gawk"; \
 	make valgrind-scan
+
+distclean-local:
+	-rm -rfv autom4te.cache || rmdir autom4te.cache
+	-rm -rfv *.dSYM || rmdir *.dSYM
+	-rm -rfv .deps || rmdir .deps
+	-find . -name .DS_Store -delete

@@ -748,7 +748,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/pwcat.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-DEJAGNU distclean-compile \
-	distclean-generic distclean-tags
+	distclean-generic distclean-local distclean-tags
 
 dvi: dvi-am
 
@@ -819,18 +819,18 @@ uninstall-am: uninstall-binSCRIPTS uninstall-local \
 	check-am clean clean-generic clean-libtool clean-local \
 	clean-pkglibexecPROGRAMS cscopelist-am ctags ctags-am \
 	distclean distclean-DEJAGNU distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binSCRIPTS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-exec-hook \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am \
-	install-pkglibexecPROGRAMS install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-binSCRIPTS uninstall-local \
+	distclean-generic distclean-libtool distclean-local \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-binSCRIPTS install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-exec-hook install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-pkglibexecPROGRAMS install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binSCRIPTS uninstall-local \
 	uninstall-pkglibexecPROGRAMS
 
 .PRECIOUS: Makefile
@@ -879,6 +879,10 @@ passwd.awk: $(srcdir)/eg/lib/passwdawk.in
 
 group.awk: $(srcdir)/eg/lib/groupawk.in
 	sed 's;/usr/local/libexec/awk;$(pkglibexecdir);' < $(srcdir)/eg/lib/groupawk.in > group.awk
+
+distclean-local:
+	-rm -rfv *.dSYM || rmdir *.dSYM
+	-rm -rfv .deps || rmdir .deps
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

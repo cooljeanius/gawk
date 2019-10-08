@@ -1,0 +1,6 @@
+# Tell GitHub to ignore when calculating language stats:
+libtool.m4 linguist-vendored
+ltoptions.m4 linguist-vendored
+ltsugar.m4 linguist-vendored
+lt~obsolete.m4 linguist-vendored
+ltversion.m4 linguist-vendored

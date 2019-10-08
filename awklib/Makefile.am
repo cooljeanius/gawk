@@ -83,3 +83,7 @@ passwd.awk: $(srcdir)/eg/lib/passwdawk.in
 
 group.awk: $(srcdir)/eg/lib/groupawk.in
 	sed 's;/usr/local/libexec/awk;$(pkglibexecdir);' < $(srcdir)/eg/lib/groupawk.in > group.awk
+
+distclean-local:
+	-rm -rfv *.dSYM || rmdir *.dSYM
+	-rm -rfv .deps || rmdir .deps

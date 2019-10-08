@@ -1,0 +1,6 @@
+# Tell GitHub to ignore when calculating language stats:
+aclocal.m4 linguist-vendored
+Makefile.in linguist-vendored
+awklib/Makefile.in linguist-vendored
+doc/Makefile.in linguist-vendored
+test/Makefile.in linguist-vendored
