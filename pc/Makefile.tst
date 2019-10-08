@@ -1,4 +1,4 @@
-# Makefile for GNU Awk test suite.
+# -*- Makefile -*- for GNU Awk test suite.
 #
 # Copyright (C) 1988-2012 the Free Software Foundation, Inc.
 # 

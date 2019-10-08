@@ -63,3 +63,5 @@ libtool
 *site.exp
 *site.bak
 cscope.files
+*.tar.xz
+gawk-4.0.2/*

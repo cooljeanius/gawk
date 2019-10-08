@@ -26,24 +26,24 @@ dnl#
 
 dnl# Process this file with autoconf to produce a configure script.
 
-AC_INIT([GNU Awk],[4.0.2],[bug-gawk@gnu.org],[gawk])
+AC_INIT([GNU Awk],[4.0.2],[bug-gawk@gnu.org],[gawk])dnl
 
 AC_PREREQ([2.69])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR([m4])dnl
 
 # This is a hack. Different versions of install on different systems
 # are just too different. Chuck it and use install-sh.
 #
-# If the user supplies $INSTALL, figure they know what they are doing.
+# If the user supplies ${INSTALL}, figure they know what they are doing.
 #
 # With Autoconf 2.5x, this needs to come very early on, but *after*
 # the INIT macro. Sigh.
 
-if test "x$INSTALL" = "x"
+if test "x${INSTALL}" = "x"
 then
 	AC_PROG_INSTALL
-	INSTALL="$srcdir/install-sh -c"
+	INSTALL="${srcdir}/install-sh -c"
 	export INSTALL
 fi
 
@@ -55,42 +55,43 @@ AM_INIT_AUTOMAKE([1.12 dejagnu dist-xz gnu -Wall])
 AM_MAINTAINER_MODE
 
 dnl# Additional argument stuff
-AC_ARG_WITH([whiny-user-strftime],[AS_HELP_STRING([--with-whiny-user-strftime],[Force use of included version of strftime for deficient systems])],[
-	if test "$withval" = yes
+AC_ARG_WITH([whiny-user-strftime],
+            [AS_HELP_STRING([--with-whiny-user-strftime],
+                            [Force use of incl. v. of strftime for badsys])],[
+	if test "x${withval}" = "xyes"
 	then
 		AC_DEFINE([USE_INCLUDED_STRFTIME],[1],
 			  [force use of our version of strftime])
 	fi
 ])
-AC_ARG_ENABLE([lint],[AS_HELP_STRING([--disable-lint],[Disable gawk lint checking])],[
-	if test "$enableval" = no
+AC_ARG_ENABLE([lint],
+              [AS_HELP_STRING([--disable-lint],[Disable gawk lint checking])],[
+	if test "x${enableval}" = "xno"
 	then
 		AC_DEFINE([NO_LINT],[1],[disable lint checks])
 	fi
-])
+])dnl
 
 AC_USE_SYSTEM_EXTENSIONS
 
 dnl# checks for programs
 AC_MSG_CHECKING([programs])
 AC_MSG_RESULT([ ])
-if test "x$EGREP" = "x"; then
-	test -z "$EGREP"
+if test "x${EGREP}" = "x"; then
+	test -z "${EGREP}"
 	AC_PROG_EGREP
 else
-	test ! -z "$EGREP"
-	export EGREP
+	test -n "${EGREP}" && export EGREP
 	AC_SUBST([EGREP])
 fi
 AC_PROG_YACC
 AC_PROG_LN_S
-if test "x$CC" = "x"; then
-	test -z "$CC"
+if test "x${CC}" = "x"; then
+	test -z "${CC}"
 	AC_PROG_CC
 	AC_PROG_CC_C_O
 else
-	test ! -z "$CC"
-	export CC
+	test -n "${CC}" && export CC
 	AC_SUBST([CC])
 fi
 AC_PROG_CPP
@@ -103,8 +104,7 @@ if test "x${MAKE}" = "x"; then
 	AM_SILENT_RULES
 	AM_DEP_TRACK
 else
-	test ! -z "${MAKE}"
-	export MAKE
+	test -n "${MAKE}" && export MAKE
 	AC_SUBST([MAKE])
 fi
 
@@ -114,61 +114,64 @@ AC_EXEEXT
 AC_MSG_CHECKING([libtool stuff])
 AC_MSG_RESULT([ ])
 LT_INIT
+AC_MSG_NOTICE([done initializing libtool])
 
 if test "x${RANLIB}" = "x"; then
 	test -z "${RANLIB}"
 	AC_PROG_RANLIB
 else
-	test ! -z "${RANLIB}"
-	export RANLIB
+	test -n "${RANLIB}" && export RANLIB
 	AC_SUBST([RANLIB])
 fi
 
 # This is mainly for my use during testing and development.
 # Yes, it is a bit of a hack.
 AC_MSG_CHECKING([for special development options])
-if test -f $srcdir/.developing
+if test -f ${srcdir}/.developing
 then
         # add other debug flags as appropriate, save GAWKDEBUG for
         # emergencies
-	CFLAGS="$CFLAGS -DARRAYDEBUG -DYYDEBUG"
-	if grep dbug $srcdir/.developing
+	CFLAGS="${CFLAGS} -DARRAYDEBUG -DYYDEBUG"
+	if grep dbug ${srcdir}/.developing
 	then
-		CFLAGS="$CFLAGS -DDBUG"
-		LIBS="$LIBS dbug/libdbug.a"
+		CFLAGS="${CFLAGS} -DDBUG"
+		LIBS="${LIBS} dbug/libdbug.a"
+	elif grep emergency ${srcdir}/.developing
+	then
+		CFLAGS="${CFLAGS} -DGAWKDEBUG"
 	fi
 	# turn on compiler warnings if we are doing development
 	# enable debugging using macros also
-	if test "$GCC" = yes
+	if test "x${GCC}" = "xyes"
 	then
-		CFLAGS="$CFLAGS -Wall -fno-builtin -g3 -gdwarf-2"
+		CFLAGS="${CFLAGS} -Wall -fno-builtin -g3 -gdwarf-2"
 	fi
 	AC_MSG_RESULT([yes])
 else
 	AC_MSG_RESULT([no])
 fi
 
-AC_SUBST([CFLAGS])
+AC_SUBST([CFLAGS])dnl
 
 dnl# checks for systems
 AC_MSG_CHECKING([systems])
 AC_MSG_RESULT([ ])
 AC_ZOS_USS
-AC_SEARCH_LIBS([strerror],[cposix]) dnl# this used to be AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix]) dnl# this used to be AC\_ISC\_POSIX
 AC_SYS_LARGEFILE
 GAWK_AC_AIX_TWEAK
 GAWK_AC_LINUX_ALPHA
 
-if test "$ISC" = 1	# will be set by test for ISC
+if test "${ISC}" = 1	# will be set by test for ISC
 then
 dnl#	need -D_SYSV3 for ISC
-	CFLAGS="$CFLAGS -D_SYSV3"
+	CFLAGS="${CFLAGS} -D_SYSV3"
 fi
 
 dnl# Set the programming language for checks. Fortunately,
 dnl# this only needs to be set once, since everything is in C.
-AC_LANG([C])
-LT_LANG([C])
+AC_LANG([C])dnl
+LT_LANG([C])dnl
 
 dnl# Cygwin does not like to get libs with full paths
 dnl# since that overrides linking against DLLs.
@@ -194,10 +197,16 @@ AC_MSG_CHECKING([libraries])
 AC_MSG_RESULT([ ])
 # FIXME: Replace `main' with a function in `-lbsd':
 AC_CHECK_LIB([bsd],[main])
-# FIXME: Replace `main' with a function in `-lefence':
-AC_CHECK_LIB([efence],[main])
-# FIXME: Replace `main' with a function in `-lm':
-AC_CHECK_LIB([m],[main])
+AC_CHECK_LIB([efence],[efence_memalign])
+AC_CHECK_LIB([history],[history_list])
+if test "x${ac_cv_lib_history_history_list}" = "xno"; then
+  AC_SEARCH_LIBS([history_list],[history readline c edit termcap ncurses])
+elif test "x${ac_cv_lib_history_history_list}" = "xyes"; then
+  AC_DEFINE([CAN_USE_HISTORY_LIST],[1],
+            [FIXME/TODO: instead of using this hackish define, just find
+             libhistory properly instead])
+fi
+LT_LIB_M
 # FIXME: Replace `main' with a function in `-lmsvcp60':
 AC_CHECK_LIB([msvcp60],[main])
 
@@ -209,26 +218,31 @@ AC_HEADER_SYS_WAIT
 AC_HEADER_TIME
 AC_CHECK_HEADERS([argz.h arpa/inet.h assert.h ctype.h errno.h fcntl.h \
         file.h float.h langinfo.h limits.h locale.h libintl.h malloc.h \
-        math.h mcheck.h netdb.h netinet/in.h setjmp.h signal.h sigsegv.h \
-        stat.h stdarg.h stdbool.h stddef.h stdio.h stdio_ext.h \
-        sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h \
-        time.h stropts.h unixlib.h wchar.h wctype.h])
+        malloc/malloc.h math.h mcheck.h netdb.h netinet/in.h setjmp.h \
+        signal.h sigsegv.h stat.h stdarg.h stddef.h stdio.h stdio_ext.h \
+        sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h time.h \
+        stropts.h unixlib.h wchar.h wctype.h])dnl
 
-if test "$ac_cv_header_string_h" = yes
+if test "x${ac_cv_header_stdbool_h}" = "x"
+then
+	test -z "${ac_cv_header_stdbool_h}"
+	AC_CHECK_HEADERS([stdbool.h])
+fi
+
+if test "x${ac_cv_header_string_h}" = "xyes"
 then
 	AC_CHECK_HEADERS([memory.h])
 else
 	AC_CHECK_HEADERS([strings.h])
 fi
-AC_EGREP_HEADER([struct lconv],[locale.h])
+AC_EGREP_HEADER([struct lconv],[locale.h])dnl
 
 dnl# checks for typedefs 
 dnl# (structs and compiler characteristics are checked for farther below)
 AC_MSG_CHECKING([typedefs])
 AC_MSG_RESULT([ ])
 AC_TYPE_PID_T
-AC_DIAGNOSE([obsolete],[your code may safely assume C89 semantics that RETSIGTYPE is void.
-Remove this warning and the `AC_CACHE_CHECK' when you adjust the code.])dnl
+dnl# begin what used to be AC\_TYPE\_SIGNAL
 AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_IFELSE(
 [AC_LANG_PROGRAM([[#include <sys/types.h>
 #include <signal.h>
@@ -236,12 +250,18 @@ AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_
 		 [[return *(signal (0, 0)) (0) == 1;]])],
 		   [ac_cv_type_signal=int],
 		   [ac_cv_type_signal=void])])
-AC_DEFINE_UNQUOTED([RETSIGTYPE],[$ac_cv_type_signal],[Define as the return type of signal handlers
+AC_DEFINE_UNQUOTED([RETSIGTYPE],[${ac_cv_type_signal}],
+                   [Define as the return type of signal handlers
 		    (`int' or `void').])
+dnl# end what used to be AC\_TYPE\_SIGNAL
 AC_TYPE_SIZE_T
 AC_TYPE_GETGROUPS
-AC_TYPE_LONG_LONG_INT
-AC_TYPE_UNSIGNED_LONG_LONG_INT
+AC_DEFUN([AC_REQUIRE_TYPES],[
+  AC_REQUIRE([AC_TYPE_LONG_LONG_INT])dnl
+  AC_REQUIRE([AC_TYPE_UNSIGNED_LONG_LONG_INT])dnl
+  AC_REQUIRE([AC_TYPE_SSIZE_T])dnl
+])dnl
+AC_REQUIRE_TYPES
 AC_TYPE_INTMAX_T
 AC_TYPE_UINTMAX_T
 AC_TYPE_INT8_T
@@ -250,13 +270,15 @@ AC_TYPE_INT32_T
 AC_TYPE_INT64_T
 AC_TYPE_MODE_T
 AC_TYPE_OFF_T
-AC_TYPE_SSIZE_T
 AC_TYPE_UINT8_T
 AC_TYPE_UINT16_T
 AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([ptrdiff_t])
-AC_CHECK_TYPE([ssize_t],[int])
+if test "x${ac_cv_type_ssize_t}" = "x"; then
+  test -z "${ac_cv_type_ssize_t}"
+  AC_CHECK_TYPE([ssize_t],[int])
+fi
 AC_CHECK_TYPES([struct lconv])
 AC_CHECK_DECLS([struct lconv])
 AC_CHECK_SIZEOF([unsigned int])
@@ -283,7 +305,7 @@ dnl# check for sockaddr_storage
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
 #include <sys/socket.h>]],[[
 	struct sockaddr_storage foo;
-]])],[AC_DEFINE([HAVE_SOCKADDR_STORAGE],[1],[newer systems define this type here])],[])
+]])],[AC_DEFINE([HAVE_SOCKADDR_STORAGE],[1],[newer systems define this type here])],[])dnl
 
 dnl# Borrwed from rsync, thanks to to Jim Meyering.
 
@@ -303,7 +325,7 @@ AC_DEFUN([TYPE_SOCKLEN_T],
       [
          # Systems have either "struct sockaddr *" or
          # "void *" as the second argument to getpeername
-         rsync_cv_socklen_t_equiv=
+         rsync_cv_socklen_t_equiv=""
          for arg2 in "struct sockaddr" void; do
             for t in int size_t unsigned long "unsigned long"; do
                AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -321,14 +343,14 @@ AC_DEFUN([TYPE_SOCKLEN_T],
             done
          done
 
-         if test "x$rsync_cv_socklen_t_equiv" = x; then
+         if test "x${rsync_cv_socklen_t_equiv}" = "x"; then
 dnl#		Some systems get this. Default to int.  -- ADR
 dnl#            AC_MSG_ERROR([Cannot find a type to use in place of socklen_t])
 		rsync_cv_socklen_t_equiv=int
          fi
       ])
-      AC_MSG_RESULT([$rsync_cv_socklen_t_equiv])
-      AC_DEFINE_UNQUOTED([socklen_t], [$rsync_cv_socklen_t_equiv],
+      AC_MSG_RESULT([${rsync_cv_socklen_t_equiv}])
+      AC_DEFINE_UNQUOTED([socklen_t],[${rsync_cv_socklen_t_equiv}],
 			[type to use in place of socklen_t if not defined])],
       [#include <sys/types.h>
 #include <sys/socket.h>])
@@ -343,26 +365,30 @@ AC_MSG_CHECKING([functions])
 AC_MSG_RESULT([ ])
 AC_FUNC_ALLOCA
 AC_FUNC_VPRINTF
-AC_FUNC_MKTIME
+AC_DEFUN([AC_REQUIRE_FUNCS],[
+  AC_REQUIRE([AC_FUNC_MKTIME])dnl
+  AC_REQUIRE([AC_FUNC_FORK])dnl
+  AC_REQUIRE([AC_FUNC_MALLOC])dnl
+  AC_REQUIRE([AC_FUNC_REALLOC])dnl
+])dnl
+AC_REQUIRE_FUNCS
 AC_FUNC_ERROR_AT_LINE
-AC_FUNC_FORK
 AC_FUNC_GETGROUPS
 AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_HEADER_MAJOR
 AC_FUNC_MMAP
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 AC_FUNC_STRTOD
-case "$ac_cv_func_working_mktime" in
+case "${ac_cv_func_working_mktime}" in
 yes)	AC_DEFINE([HAVE_MKTIME], [1], [we have the mktime function])
 	;;
 esac
 
-AC_CHECK_FUNC([getaddrinfo],[AC_DEFINE([HAVE_GETADDRINFO],[1],[have getaddrinfo])],
+AC_CHECK_FUNC([getaddrinfo],
+              [AC_DEFINE([HAVE_GETADDRINFO],[1],[have getaddrinfo])],
 	      [AC_CHECK_LIB([socket],[getaddrinfo],
 			    [AC_DEFINE([HAVE_GETADDRINFO],[1],
-				       [have getaddrinfo])])])
+				       [have getaddrinfo])])])dnl
 
 AC_CHECK_LIB([m],[fmod])
 AC_CHECK_LIB([m],[isinf])
@@ -377,41 +403,47 @@ esac
 
 # Need the check for mkstemp and tmpfile for missing_d/snprintf.c.
 AC_CHECK_FUNCS([__argz_count __argz_next __argz_stringify atexit btowc \
-        dup2 endgrent endpwent estrdup floor fmod format_tree format_val \
-        getcwd getwd getgrent getgroups gethostbyname gettimeofday grantpt \
-        init_locale isascii isnondecimal iswctype iswlower iswupper lconv \
-        localeconv mblen mbrlen memchr memcmp memcpy memcpy_ulong memmove \
+        dup2 endgrent endpwent estrdup floor fmod format_tree format_val free \
+        getcwd getwd getgrent gethostbyname gettimeofday grantpt init_locale \
+        isascii isnondecimal iswctype iswlower iswupper lconv localeconv \
+        mblen mbrlen memchr memcmp memcpy memcpy_ulong memmove \
         mempcpy memset memset_ulong mkstemp modf munmap nl_langinfo \
         posix_openpt pow printf re_comp regcomp scanf setenv setlocale \
         setsid snprintf socket sqrt stpcpy strcasecmp strchr strcspn \
         strdup strerror strftime strlen strncasecmp strcoll strrchr \
         strstr strtol strtoul system tmpfile towlower towupper tzset \
-        usleep wcrtomb wcscoll wctype])
+        usleep wcrtomb wcscoll wctype])dnl
+
+if test "x${ac_cv_func_getgroups}" = "x"; then
+  test -z "${ac_cv_func_getgroups}"
+  AC_CHECK_FUNCS([getgroups])
+fi
 
 dnl# this check is for both mbrtowc and the mbstate_t type, which is good
 AC_FUNC_MBRTOWC
 
 dnl# check for dynamic linking
 dnl# This is known to be very primitive
+unset ac_cv_header_dlfcn_h
 AC_CHECK_HEADER([dlfcn.h],
 	[AC_DEFINE([DYNAMIC],[1],[dynamic loading is possible])
-	if test "$GCC" = yes
+	if test "x${GCC}" = "xyes"
 	then
 		# Add others here as appropriate,
 		# one day use GNU libtool.
 		# 3/2010: Used to have cygwin here but removed since
 		# we get complaints that -export-dynamic does not work.
-		if uname | $EGREP -i 'linux|freebsd' > /dev/null
+		if uname | ${EGREP} -i 'linux|freebsd' > /dev/null
 		then
-			LDFLAGS="$LDFLAGS -export-dynamic"
+			LDFLAGS="${LDFLAGS} -export-dynamic"
 		fi
 	fi
 
 	# Check this separately. Some systems have dlopen
 	# in libc. Notably freebsd and cygwin.
 	# HP-NSK has it in zrldsrl
-	AC_SEARCH_LIBS([dlopen],[dl zrldsrl])
-])
+	AC_SEARCH_LIBS([dlopen],[dl zrldsrl c dlcompat dyld])
+])dnl
 
 dnl# check for how to use getpgrp
 dnl# have to hardwire it for VMS POSIX. Sigh.
@@ -447,10 +479,11 @@ int main()
 	[has_f_format=no],
 	[has_f_format=no  dnl# Cross-compiling, assuming the worst.
 ])
-if test "$has_f_format" = yes; then
-	AC_DEFINE([PRINTF_HAS_F_FORMAT],[1],[Define to 1 if *printf supports %F format])
+if test "x${has_f_format}" = "xyes"; then
+	AC_DEFINE([PRINTF_HAS_F_FORMAT],[1],
+	          [Define to 1 if *printf supports %F format])
 fi
-AC_MSG_RESULT([$has_f_format])
+AC_MSG_RESULT([${has_f_format}])
 
 dnl# check for sockets
 GAWK_AC_LIB_SOCKETS
@@ -461,22 +494,20 @@ GNUPG_CHECK_READLINE
 dnl# checks for structure members
 AC_MSG_CHECKING([structs])
 AC_MSG_RESULT([ ])
-AC_DIAGNOSE([obsolete],[your code should no longer depend upon `HAVE_ST_BLKSIZE', but
-`HAVE_STRUCT_STAT_ST_BLKSIZE'.  Remove this warning and
-the `AC_DEFINE' when you adjust the code.])dnl
+dnl# begin obsolete thing
 AC_CHECK_MEMBERS([struct stat.st_blksize],[AC_DEFINE([HAVE_ST_BLKSIZE],[1],
 			    [Define to 1 if your `struct stat' has
 			     `st_blksize'.  Deprecated, use
-			     `HAVE_STRUCT_STAT_ST_BLKSIZE' instead.])])
-
-AC_HEADER_TIME
+			     `HAVE_STRUCT_STAT_ST_BLKSIZE' instead.])])dnl
+dnl# end obsolete thing
+dnl# AC\_HEADER\_TIME is done above
 AC_STRUCT_DIRENT_D_INO
 AC_STRUCT_DIRENT_D_TYPE
 AC_STRUCT_TM
 AC_STRUCT_TIMEZONE
 AC_STRUCT_ST_BLOCKS
 AC_CHECK_MEMBERS([struct stat.st_rdev])
-AC_CHECK_MEMBERS([struct lconv.decimal_point])
+AC_CHECK_MEMBERS([struct lconv.decimal_point])dnl
 
 dnl# checks for compiler characteristics
 AC_MSG_CHECKING([compiler characteristics])
@@ -489,6 +520,7 @@ AC_C_PROTOTYPES
 AC_C_RESTRICT
 AC_C_STRINGIZE
 
+dnl# Output.
 AC_CONFIG_HEADERS([config.h:configh.in])
 AH_BOTTOM([#include "custom.h"])
 

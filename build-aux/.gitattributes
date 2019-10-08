@@ -1,0 +1,12 @@
+# Tell GitHub to ignore when calculating language stats:
+compile linguist-vendored
+config.guess linguist-vendored
+config.rpath linguist-vendored
+config.sub linguist-vendored
+depcomp linguist-vendored
+install-sh linguist-vendored
+ltmain.sh linguist-vendored
+missing linguist-vendored
+mkinstalldirs linguist-vendored
+texinfo.tex linguist-vendored
+ylwrap linguist-vendored

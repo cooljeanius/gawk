@@ -44,13 +44,13 @@ EXTRA_DIST = \
 	PROBLEMS \
 	README_d \
 	bisonfix.awk \
-	config.guess \
-	config.rpath  \
-	config.sub \
-	depcomp \
+	build-aux/config.guess \
+	build-aux/config.rpath  \
+	build-aux/config.sub \
+	build-aux/depcomp \
 	extension \
 	m4 \
-	missing \
+	build-aux/missing \
 	missing_d \
 	po/README \
 	pc \
@@ -61,7 +61,7 @@ EXTRA_DIST = \
 	regexec.c \
 	version.in \
 	vms \
-	ylwrap
+	build-aux/ylwrap
 
 # It is OK for the generated file `version.c' not to be removed by
 # "make distclean".

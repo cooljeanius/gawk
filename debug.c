@@ -4057,7 +4057,11 @@ do_save(CMDARG *arg, int cmd ATTRIBUTE_UNUSED)
 		return FALSE;
 	}
 
+#ifdef CAN_USE_HISTORY_LIST
 	hist_list = history_list();
+#else
+	hist_list = NULL;
+#endif /* CAN_USE_HISTORY_LIST */
 	if (hist_list && history_length > sess_history_base) {
 		for (i = sess_history_base; hist_list[i] != NULL; i++) {
 			char *line;
@@ -4305,7 +4309,11 @@ serialize(int type)
 		ptr = (void *) display_list.prev;
 		break;
 	case HISTORY:
+#ifdef CAN_USE_HISTORY_LIST
 		hist_list = history_list();
+#else
+		hist_list = NULL;
+#endif /* CAN_USE_HISTORY_LIST */
 		if (hist_list == NULL) /* empty history list */
 			return;
 		end_ptr = NULL;
