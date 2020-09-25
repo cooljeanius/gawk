@@ -4,3 +4,6 @@ Makefile.in linguist-vendored
 awklib/Makefile.in linguist-vendored
 doc/Makefile.in linguist-vendored
 test/Makefile.in linguist-vendored
+
+# Gnulib's git-merge-changelog driver:
+ChangeLog    merge=cl-merge

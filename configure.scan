@@ -1,9 +1,9 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.69.185-b502e])
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
-AC_CONFIG_SRCDIR([array.c])
+AC_CONFIG_SRCDIR([getopt1.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
@@ -18,18 +18,18 @@ AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-lbsd':
+# FIXME: Replace 'main' with a function in '-lbsd':
 AC_CHECK_LIB([bsd], [main])
-# FIXME: Replace `main' with a function in `-lefence':
+# FIXME: Replace 'main' with a function in '-lefence':
 AC_CHECK_LIB([efence], [main])
-# FIXME: Replace `main' with a function in `-lm':
+# FIXME: Replace 'main' with a function in '-lm':
 AC_CHECK_LIB([m], [main])
-# FIXME: Replace `main' with a function in `-lmsvcp60':
+# FIXME: Replace 'main' with a function in '-lmsvcp60':
 AC_CHECK_LIB([msvcp60], [main])
 
 # Checks for header files.
 AC_FUNC_ALLOCA
-AC_CHECK_HEADERS([arpa/inet.h fcntl.h float.h inttypes.h langinfo.h libintl.h limits.h locale.h malloc.h memory.h netdb.h netinet/in.h stddef.h stdint.h stdlib.h string.h strings.h sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h unistd.h wchar.h wctype.h])
+AC_CHECK_HEADERS([arpa/inet.h fcntl.h inttypes.h langinfo.h libintl.h malloc.h netdb.h netinet/in.h stdint.h strings.h sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
@@ -68,4 +68,5 @@ AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  pc/Makefile
                  test/Makefile])
+AC_CONFIG_SUBDIRS([gawk-4.0.2])
 AC_OUTPUT

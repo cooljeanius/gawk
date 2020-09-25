@@ -223,10 +223,22 @@ AC_CHECK_HEADERS([argz.h arpa/inet.h assert.h ctype.h errno.h fcntl.h \
         sys/ioctl.h sys/param.h sys/socket.h sys/time.h termios.h time.h \
         stropts.h unixlib.h wchar.h wctype.h])dnl
 
+if test "x${ac_cv_header_inttypes_h}" = "x"
+then
+	test -z "${ac_cv_header_inttypes_h}"
+ 	AC_CHECK_HEADERS([inttypes.h])
+fi
+
 if test "x${ac_cv_header_stdbool_h}" = "x"
 then
 	test -z "${ac_cv_header_stdbool_h}"
 	AC_CHECK_HEADERS([stdbool.h])
+fi
+
+if test "x${ac_cv_header_stdint_h}" = "x"
+then
+	test -z "${ac_cv_header_stdint_h}"
+	AC_CHECK_HEADERS([stdint.h])
 fi
 
 if test "x${ac_cv_header_string_h}" = "xyes"
@@ -235,6 +247,13 @@ then
 else
 	AC_CHECK_HEADERS([strings.h])
 fi
+
+if test "x${ac_cv_header_unistd_h}" = "x"
+then
+	test -z "${ac_cv_header_unistd_h}"
+	AC_CHECK_HEADERS([unistd.h])
+fi
+
 AC_EGREP_HEADER([struct lconv],[locale.h])dnl
 
 dnl# checks for typedefs 
