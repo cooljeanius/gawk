@@ -78,7 +78,7 @@ dnl# checks for programs
 AC_MSG_CHECKING([programs])
 AC_MSG_RESULT([ ])
 if test "x${EGREP}" = "x"; then
-	test -z "${EGREP}"
+	test -z "${EGREP}" || unset EGREP
 	AC_PROG_EGREP
 else
 	test -n "${EGREP}" && export EGREP
@@ -87,7 +87,7 @@ fi
 AC_PROG_YACC
 AC_PROG_LN_S
 if test "x${CC}" = "x"; then
-	test -z "${CC}"
+	test -z "${CC}" || unset CC
 	AC_PROG_CC
 	AC_PROG_CC_C_O
 else
@@ -96,10 +96,10 @@ else
 fi
 AC_PROG_CPP
 AC_PROG_CXX
-AC_PATH_PROG([MV_F],[mv])
+AC_PATH_PROGS([MV_F],[mv gmv])
 if test "x${MAKE}" = "x"; then
-	test -z "${MAKE}"
-	AC_PATH_PROG([MAKE],[make gmake gnumake])
+	test -z "${MAKE}" || unset MAKE
+	AC_PATH_PROGS([MAKE],[make gmake gnumake remake])
 	AC_PROG_MAKE_SET
 	AM_SILENT_RULES
 	AM_DEP_TRACK
@@ -107,7 +107,21 @@ else
 	test -n "${MAKE}" && export MAKE
 	AC_SUBST([MAKE])
 fi
-
+if test "x${AR}" = "x"; then
+  test -z "${AR}" || unset AR
+  AC_CHECK_TOOLS([AR],[ar gar])dnl
+  ## might want to switch around these checks...
+  if test "x${ac_cv_prog_AR}" = "x"; then
+    test -z "${ac_cv_prog_AR}" || unset ac_cv_prog_AR
+    m4_ifdef([AC_PROG_AR],[
+      AC_PROG_AR
+    ],[
+      test -x "`which ar`" && echo "first ar in path is `which ar`"
+    ])
+  fi
+else
+  test -n "${AR}" && export AR
+fi
 AC_OBJEXT
 AC_EXEEXT
 
@@ -117,7 +131,7 @@ LT_INIT
 AC_MSG_NOTICE([done initializing libtool])
 
 if test "x${RANLIB}" = "x"; then
-	test -z "${RANLIB}"
+	test -z "${RANLIB}" || unset RANLIB
 	AC_PROG_RANLIB
 else
 	test -n "${RANLIB}" && export RANLIB
@@ -225,19 +239,19 @@ AC_CHECK_HEADERS([argz.h arpa/inet.h assert.h ctype.h errno.h fcntl.h \
 
 if test "x${ac_cv_header_inttypes_h}" = "x"
 then
-	test -z "${ac_cv_header_inttypes_h}"
+	test -z "${ac_cv_header_inttypes_h}" || unset ac_cv_header_inttypes_h
  	AC_CHECK_HEADERS([inttypes.h])
 fi
 
 if test "x${ac_cv_header_stdbool_h}" = "x"
 then
-	test -z "${ac_cv_header_stdbool_h}"
+	test -z "${ac_cv_header_stdbool_h}" || unset ac_cv_header_stdbool_h
 	AC_CHECK_HEADERS([stdbool.h])
 fi
 
 if test "x${ac_cv_header_stdint_h}" = "x"
 then
-	test -z "${ac_cv_header_stdint_h}"
+	test -z "${ac_cv_header_stdint_h}" || unset ac_cv_header_stdint_h
 	AC_CHECK_HEADERS([stdint.h])
 fi
 
@@ -250,7 +264,7 @@ fi
 
 if test "x${ac_cv_header_unistd_h}" = "x"
 then
-	test -z "${ac_cv_header_unistd_h}"
+	test -z "${ac_cv_header_unistd_h}" || unset ac_cv_header_unistd_h
 	AC_CHECK_HEADERS([unistd.h])
 fi
 
@@ -295,7 +309,7 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_CHECK_TYPES([ptrdiff_t])
 if test "x${ac_cv_type_ssize_t}" = "x"; then
-  test -z "${ac_cv_type_ssize_t}"
+  test -z "${ac_cv_type_ssize_t}" || unset ac_cv_type_ssize_t
   AC_CHECK_TYPE([ssize_t],[int])
 fi
 AC_CHECK_TYPES([struct lconv])
@@ -434,7 +448,7 @@ AC_CHECK_FUNCS([__argz_count __argz_next __argz_stringify atexit btowc \
         usleep wcrtomb wcscoll wctype])dnl
 
 if test "x${ac_cv_func_getgroups}" = "x"; then
-  test -z "${ac_cv_func_getgroups}"
+  test -z "${ac_cv_func_getgroups}" || unset ac_cv_func_getgroups
   AC_CHECK_FUNCS([getgroups])
 fi
 

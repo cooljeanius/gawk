@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gawk 4.0.2\n"
 "Report-Msgid-Bugs-To: arnold@skeeve.com\n"
-"POT-Creation-Date: 2019-10-08 03:42-0400\n"
+"POT-Creation-Date: 2024-09-13 19:00-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1095,8 +1095,8 @@ msgstr ""
 #: ext.c:84
 #, c-format
 msgid ""
-"fatal: extension: library `%s': does not define "
-"`plugin_is_GPL_compatible' (%s)\n"
+"fatal: extension: library `%s': does not define `plugin_is_GPL_compatible' "
+"(%s)\n"
 msgstr ""
 
 #: ext.c:93

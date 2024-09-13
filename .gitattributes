@@ -1,9 +1,11 @@
 # Tell GitHub to ignore when calculating language stats:
-aclocal.m4 linguist-vendored
-Makefile.in linguist-vendored
-awklib/Makefile.in linguist-vendored
-doc/Makefile.in linguist-vendored
-test/Makefile.in linguist-vendored
+aclocal.m4 linguist-generated
+configure.scan linguist-generated
+install-sh linguist-vendored
+Makefile.in linguist-generated
+awklib/Makefile.in linguist-generated
+doc/Makefile.in linguist-generated
+test/Makefile.in linguist-generated
 
 # Gnulib's git-merge-changelog driver:
 ChangeLog    merge=cl-merge
