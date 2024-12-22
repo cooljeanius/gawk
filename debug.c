@@ -5307,12 +5307,19 @@ read_commands_string(const char *prompt ATTRIBUTE_UNUSED)
 static void
 save_options(const char *file)
 {
+	int fd;
 	FILE *fp;
 	const struct dbg_option *opt;	
 
-	fp = fopen(file, "w");
-	if (fp == NULL)
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
 		return;
+
+	fp = fdopen(fd, "w");
+	if (fp == NULL) {
+		close(fd);
+		return;
+	}
 
 	for (opt = option_list; opt->name; opt++) {
 		if (opt->str_val != NULL)
@@ -5321,7 +5328,8 @@ save_options(const char *file)
 			fprintf(fp, "option %s = %d\n", opt->name, *(opt->num_val));
 	}
 	fclose(fp);
-	chmod(file, 0600);
+	fchmod(fd, 0600);
+	close(fd);
 }
 
 /* close_all --- close all open files */
