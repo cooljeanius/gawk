@@ -251,6 +251,11 @@ format_val(const char *format, int index, NODE *s)
 	if (s->stptr != NULL)
 		efree(s->stptr);
 	emalloc(s->stptr, char *, s->stlen + 2, "format_val");
+	if (s->stptr == NULL) {
+		/* Handle allocation failure */
+		/* You can add error handling code here */
+		return NULL; /* or appropriate error handling */
+	}
 	memcpy(s->stptr, sp, s->stlen+1);
 no_malloc:
 	s->flags |= STRCUR;
